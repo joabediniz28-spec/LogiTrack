@@ -1,23 +1,14 @@
-# LogiTrack
-A LogiTrack é uma startup de tecnologia logística B2B operando no modelo SaaS (Software as a Service).
-Ela oferece uma API de altíssima velocidade para cálculo de frete, roteirização inteligente e previsão de entrega em tempo real para pequenas e médias plataformas de e-commerce.
-Para que serve?
-Ela funciona como um "motor de inteligência" invisível. 
-O e-commerce do cliente envia os dados do pedido (peso, dimensões, origem e destino) para a nossa API, e o sistema da LogiTrack responde instantaneamente com as melhores opções de transportadoras, rotas mais baratas e o prazo exato de entrega.
+# 🚚 LogiTrack SaaS — Infraestrutura Cloud Serverless
 
-Qual problema a empresa resolve?
-Ineficiência no E-commerce: Pequenos e-commerces não têm poder de barganha nem tecnologia para integrar diretamente com dezenas de transportadoras e calcular fretes eficientes em milissegundos.
-Abandono de Carrinho: Lentidão no cálculo do frete no checkout faz clientes desistirem da compra. 
-A nossa solução responde em menos de 100ms.
-Falta de Previsibilidade: Rastreamentos tradicionais são falhos. A LogiTrack consolida os dados das entregas para prever atrasos antes que eles aconteçam.
+A **LogiTrack** é uma startup fictícia de tecnologia logística B2B operando no modelo SaaS. Este repositório contém a arquitetura completa da empresa provisionada na AWS utilizando práticas reais de mercado, foco em custo zero (Free Tier) e automação via Infraestrutura como Código (IaC).
 
-Cultura Organizacional (Direcionamento de Engenharia)Na nuvem, a cultura da empresa dita a arquitetura. 
-Como temos no máximo 4 pessoas por setor, a empresa precisa ser altamente automatizada e Serverless por definição estratégica.
+## 🎯 O Modelo de Negócio
+Oferecemos uma API de alta velocidade para cálculo de frete e roteirização inteligente para e-commerces.
+* **Problema:** Lentidão no cálculo de frete que gera abandono de carrinho em pequenas plataformas de e-commerce.
+* **Solução:** Uma API Serverless descentralizada que processa requisições de rotas em menos de 100ms.
 
-Missão: Democratizar a inteligência logística para qualquer e-commerce do mundo através de APIs simples, rápidas e escaláveis.
-
-Visão: Ser a infraestrutura de cálculo de rotas mais confiável da América Latina, processando milhões de requisições diárias com custo operacional próximo a zero.
-
-Valores:Obsessão por Performance (Latência Mínima): Cada milissegundo economizado na API é dinheiro para o cliente.
-Segurança desde a Concepção (Security by Design): Dados de entrega e endereços são sensíveis; a segurança não é um extra, é a fundação.
-Eficiência de Custo (Frugalidade): Gastar apenas pelo que é consumido para repassar a economia ao cliente final.
+## 🧭 Diretrizes de Engenharia (Cultura)
+Como uma startup enxuta (máximo de 4 funcionários por setor), nossa infraestrutura foi desenhada sob três pilares:
+* **Frugalidade (Eficiência de Custo):** Arquitetura 100% Serverless para garantir cobrança estritamente baseada no uso (Pay-as-you-go), mantendo o custo operacional em $0 durante a validação.
+* **Segurança Baseada em Identidade (Zero Trust):** Governança corporativa implementada via AWS IAM Identity Center com privilégio mínimo para os 4 setores da empresa.
+* **Obsessão por Performance:** Uso de banco de dados NoSQL (DynamoDB) de chave-valor para latências de um dígito de milissegundo.
