@@ -25,6 +25,9 @@ Como uma startup enxuta limitada a **no máximo 4 funcionários por setor**, a e
 *   **Frugalidade (Eficiência de Custo):** Arquitetura 100% Serverless. O custo operacional é estritamente baseado no uso (*Pay-as-you-go*), mantendo a infraestrutura elegível ao **AWS Free Tier (\$0.00 USD/mês)** para validação.
 *   **Segurança Baseada em Identidade (Zero Trust):** Isolamento absoluto de acessos corporativos implementado via AWS IAM Identity Center (SSO) com base no princípio do privilégio mínimo.
 *   **Obsessão por Performance:** Uso de processamento assíncrono e banco de dados NoSQL de chave-valor para garantir latências de um dígito de milissegundo.
+  ### 🛡️ Política Rígida de MFA (Multi-Factor Authentication)
+Para mitigar riscos de roubo de credenciais, foi configurada uma política global de **MFA Obrigatório** no IAM Identity Center. Todos os colaboradores (inclusive os perfis simulados) são forçados a registrar um aplicativo de autenticação (TOTP) já no primeiro acesso ao portal SSO, bloqueando logins que utilizem apenas usuário e senha.
+
 
 ---
 
