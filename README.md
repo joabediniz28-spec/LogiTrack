@@ -1,92 +1,77 @@
-# 🛡️ Fase 1: Governança, Identidade Corporativa e Controle de Custos
+# 🚚 LogiTrack SaaS — Infraestrutura Cloud Serverless
 
-Esta pasta contém a documentação técnica e as evidências da implementação da camada de **Governança, Identidade e FinOps** da LogiTrack SaaS. 
+A **LogiTrack** é uma startup de tecnologia logística B2B operando no modelo SaaS (Software as a Service). Este repositório contém o desenho, o provisionamento e a automação de toda a infraestrutura global da empresa na **AWS**, simulando um ambiente corporativo real e enxuto. 
 
-Seguindo as melhores práticas modernas do *AWS Well-Architected Framework* (Pilar de Segurança), foi eliminado o uso de *IAM Users* tradicionais em favor do **AWS IAM Identity Center (SSO)**, centralizando o acesso corporativo com base no **Princípio do Privilégio Mínimo**.
-
----
-
-## 👥 Mapeamento de Usuários e Setores (Modelagem Corporativa)
-
-A empresa foi dividida em 4 departamentos estratégicos com um limite estrito de funcionários. Cada colaborador interage com a nuvem utilizando credenciais exclusivas atreladas ao seu respectivo grupo funcional:
-
-### 1. Grupo: `LogiTrack-CLevel` (Diretoria)
-*   **Membros:** `ana.silva` (CEO), `carlos.moraes` (CTO)
-*   **Função:** Auditoria técnica e acompanhamento estratégico da saúde do negócio.
-
-### 2. Grupo: `LogiTrack-Dev` (Engenharia de Software / Desenvolvimento)
-*   **Membros:** `julia.costa` (Backend Dev), `lucas.almeida` (Frontend Dev)
-*   **Função:** Codificação, depuração e deploy das funções de negócios da API Serverless.
-
-### 3. Grupo: `LogiTrack-DevOps` (Operações, Infraestrutura e Segurança)
-*   **Membros:** `bruno.santos` (Cloud Engineer), `mariana.lima` (SecOps)
-*   **Função:** Provisionamento de infraestrutura como código, gerenciamento de banco de dados e arquitetura de redes.
-
-### 4. Grupo: `LogiTrack-FinOps` (Controladoria, Finanças e RH)
-*   **Membros:** `rodrigo.dias` (CFO)
-*   **Função:** Monitoramento de orçamentos, auditoria de gastos e emissores de relatórios de faturamento.
+O objetivo deste projeto é aplicar os conceitos das certificações AWS na resolução de problemas reais de negócio, utilizando práticas de **Segurança (Zero Trust)**, **Governança** e **Arquitetura Serverless (Custo Zero)**.
 
 ---
 
-## 🛡️ Matriz de Permissões (Permission Sets)
+## 🎯 O Cenário de Negócio
 
-As políticas de acesso foram desenhadas utilizando **Permission Sets** corporativos associados diretamente aos grupos dentro da instância do Identity Center:
+### O que é?
+A LogiTrack oferece uma API de altíssima velocidade para cálculo de frete, roteirização inteligente e previsão de entrega em tempo real para pequenas e médias plataformas de e-commerce.
 
-| Nome do Grupo | Permission Set Aplicado | Justificativa de Segurança (Least Privilege) |
-| :--- | :--- | :--- |
-| **`LogiTrack-CLevel`** | `ReadOnlyAccess` | Permite visualizar toda a infraestrutura para auditoria sem permissão de escrita ou exclusão de recursos. |
-| **`LogiTrack-Dev`** | `AWSLambda_FullAccess`<br>`AmazonAPIGatewayAdministrator`<br>`CloudWatchLogsReadOnlyAccess` | Concede autonomia total sobre a camada Serverless e logs de depuração, bloqueando o acesso a redes e billing. |
-| **`LogiTrack-DevOps`** | `PowerUserAccess` | Acesso administrativo total para gerenciamento de recursos e segurança, exceto privilégios de faturamento e fechamento de conta. |
-| **`LogiTrack-FinOps`** | `Billing` | Acesso exclusivo ao *AWS Billing and Cost Management*. Membros do grupo são completamente bloqueados para interagir com serviços técnicos. |
-
----
-
-## 🛡️ Política Rígida de MFA (Multi-Factor Authentication)
-
-Para mitigar riscos de roubo de credenciais ou vazamento de acessos corporativos, foi configurada uma política global de **MFA Obrigatório** no IAM Identity Center:
-*   **Frequência:** Exigido em 100% dos logins em todas as contas da força de trabalho.
-*   **Mecanismos:** Suporte a chaves de segurança de hardware (FIDO2/U2F), biometria integrada (TouchID/Windows Hello) e aplicativos autenticadores baseados em tempo (TOTP).
-*   **Auto-registro:** Usuários sem um dispositivo cadastrado são forçados a realizar o vínculo no primeiro acesso, impedindo o bypass da política.
+### O Problema que Resolvemos
+1. **Ineficiência no E-commerce:** Pequenos e-commerces não têm tecnologia para integrar de forma rápida com dezenas de transportadoras.
+2. **Abandono de Carrinho:** A lentidão no cálculo do frete durante o checkout faz o cliente desistir. Nossa API responde em menos de 100ms.
+3. **Falta de Previsibilidade:** Centralizamos o histórico de consultas para prever gargalos de entrega antes que eles aconteçam.
 
 ---
 
-## 💰 Cultura FinOps: Proteção de Orçamento (AWS Budgets)
+## 🧭 Diretrizes de Engenharia e Cultura
 
-Para garantir que a infraestrutura opere estritamente dentro do **AWS Free Tier**, foi implementada uma barreira de segurança financeira utilizando o **AWS Budgets**:
+Como uma startup enxuta limitada a **no máximo 4 funcionários por setor**, a engenharia da LogiTrack segue três princípios rígidos do *AWS Well-Architected Framework*:
 
-*   **Tipo de Orçamento:** Cost Budget (Mensal).
-*   **Limite Estipulado:** **\$5.00 USD**.
-*   **Política de Alertas:** 
-    *   **Gatilho 1:** Notificação por e-mail quando o custo real atingir **80% (\$4.00)** do limite.
-    *   **Gatilho 2:** Notificação por e-mail imediata caso o custo projetado para o fim do mês atinja **100% (\$5.00)**.
+*   **Frugalidade (Eficiência de Custo):** Arquitetura 100% Serverless. O custo operacional é estritamente baseado no uso (*Pay-as-you-go*), mantendo a infraestrutura elegível ao **AWS Free Tier (\$0.00 USD/mês)** para validação.
+*   **Segurança Baseada em Identidade (Zero Trust):** Isolamento absoluto de acessos corporativos implementado via AWS IAM Identity Center (SSO) com base no princípio do privilégio mínimo.
+*   **Obsessão por Performance:** Uso de processamento assíncrono e banco de dados NoSQL de chave-valor para garantir latências de um dígito de milissegundo.
 
 ---
 
-## 📸 Evidências de Configuração (Laboratório Prático)
+## 🏢 Estrutura Organizacional Corporativa
 
-### 1. Painel do AWS IAM Identity Center (Listagem de Usuários)
-![Usuários criados no Identity Center](usuarios-identity-center.png)
-*Evidência dos 7 usuários da LogiTrack ativos e gerenciados via diretório SSO corporativo.*
+A governança e o acesso à nuvem são divididos em 4 departamentos simulados (limite de 4 pessoas por setor):
 
-### 2. Configuração de Segurança Global (MFA Ativo)
-![Configuração de MFA Obrigatório](configuracao-mfa.png)
-*Evidência da política de MFA ativo em todos os logins para conformidade de segurança corporativa.*
-### 3. Matriz de Perfis de Acesso Corporativo (Permission Sets)
-![Conjuntos de Permissões Provisionados](Permissao-identity-center.png)
-*Evidência dos Permission Sets criados sob o princípio do privilégio mínimo para isolamento dos 4 departamentos da LogiTrack SaaS.*
+*   **👥 Diretoria (C-Level):** Acesso de auditoria global (`ReadOnlyAccess`) para acompanhamento de métricas e custos.
+*   **👥 Desenvolvimento (Dev):** Permissões para gerenciar códigos, funções Lambda e visualizar logs de depuração. Sem acesso de exclusão em produção.
+*   **👥 Operações & Infra (DevOps):** Acesso administrativo (`PowerUserAccess`) para provisionar redes, gerenciar tabelas e automações.
+*   **👥 Finanças & RH (Biz):** Acesso restrito e exclusivo ao *AWS Billing and Cost Management* para controle de orçamentos (*FinOps*).
 
+---
 
-### 4. Configuração de FinOps (AWS Budgets)
-![Alarme configurado no AWS Budgets](aws-budgets.png)
-*Evidência do orçamento de segurança de \$5.00 ativo para evitar surpresas na fatura.*
+## 🌐 Arquitetura de Referência (AWS Serverless)
 
-### 5. Validação Prática de Acesso Negado (Rodrigo - FinOps)
-![Acesso Negado em Produção](teste-privilegio-minimo.png)
-*Evidência prática do princípio do privilégio mínimo: o usuário rodrigo.dias (FinOps) tem seu acesso totalmente bloqueado ao tentar visualizar componentes de segurança de infraestrutura (Security Hub).*
+Abaixo está o fluxo de dados desenhado para suportar as requisições da nossa API logística:
 
+```text
+[ Plataforma de E-commerce ] 
+             │
+             ▼
+      [ Amazon Route 53 ] (DNS Global)
+             │
+             ▼
+     [ Amazon CloudFront ] (Distribuição Edge / SSL)
+             │
+             ▼
+    [ Amazon API Gateway ] (Roteamento e Autenticação HTTPS)
+             │
+             ▼
+       [ AWS Lambda ] (Lógica de Cálculo de Roteirização)
+             │
+             ▼
+     [ Amazon DynamoDB ] (Banco NoSQL - Armazenamento de Histórico)
+```
 
-### 6. Restrição Granular de Recursos Administrativos
-![Acesso Negado Menu](detalhe-acesso-negado.png) 
+---
 
- *Até mesmo configurações estéticas da conta (como 'Cor da conta') são bloqueadas para o perfil de FinOps, validando o isolamento rígido imposto pelo IAM Identity Center.*
+## 🚀 Roadmap de Implementação
 
+O projeto está dividido em fases incrementais de engenharia:
+
+*   [ ] **Fase 1:** Governança e Identidade corporativa com AWS IAM Identity Center e AWS Budgets.
+*   [ ] **Fase 2:** Infraestrutura como Código (IaC) com AWS SAM/Terraform e isolamento de rede corporativa.
+*   [ ] **Fase 3:** Implantação do Backend da API Serverless (API Gateway + Lambda + DynamoDB).
+*   [ ] **Fase 4:** Automação e Esteira de CI/CD integrada ao GitHub Actions.
+
+---
+🔬 *Nota: Este projeto foi desenvolvido para fins educacionais de portfólio, aplicando conceitos avançados de Cloud Architecture.*
