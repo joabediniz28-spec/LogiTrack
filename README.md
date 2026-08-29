@@ -84,3 +84,8 @@ Para garantir que a infraestrutura opere estritamente dentro do **AWS Free Tier*
 ![Acesso Negado em Produção](teste-privilegio-minimo.png)
 *Evidência prática do princípio do privilégio mínimo: o usuário rodrigo.dias (FinOps) tem seu acesso totalmente bloqueado ao tentar visualizar componentes de segurança de infraestrutura (Security Hub).*
 
+
+### 6. Restrição Granular de Recursos Administrativos
+![Acesso Negado Menu](detalhe-acesso-negado.png)
+*Até mesmo configurações estéticas da conta (como 'Cor da conta') são bloqueadas para o perfil de FinOps, validando o isolamento rígido imposto pelo IAM Identity Center.*
+
