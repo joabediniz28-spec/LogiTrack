@@ -71,7 +71,11 @@ Para garantir que a infraestrutura opere estritamente dentro do **AWS Free Tier*
 ### 2. Configuração de Segurança Global (MFA Ativo)
 ![Configuração de MFA Obrigatório](configuracao-mfa.png)
 *Evidência da política de MFA ativo em todos os logins para conformidade de segurança corporativa.*
+### 3. Matriz de Perfis de Acesso Corporativo (Permission Sets)
+![Conjuntos de Permissões Provisionados](Permissao-identity-center.png)
+*Evidência dos Permission Sets criados sob o princípio do privilégio mínimo para isolamento dos 4 departamentos da LogiTrack SaaS.*
 
-### 3. Configuração de FinOps (AWS Budgets)
+
+### 4. Configuração de FinOps (AWS Budgets)
 ![Alarme configurado no AWS Budgets](aws-budgets.png)
 *Evidência do orçamento de segurança de \$5.00 ativo para evitar surpresas na fatura.*
