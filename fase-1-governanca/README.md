@@ -55,15 +55,17 @@ Para garantir que a infraestrutura opere estritamente dentro do **AWS Free Tier*
 
 ## 📸 Evidências de Configuração (Laboratório Prático)
 
-> *Instruções para o seu portfólio: Substitua os placeholders abaixo pelos prints reais tirados diretamente do console da sua conta AWS para comprovar sua habilidade prática.*
+### 1. Painel do AWS IAM Identity Center (Listagem de Usuários)
+![Usuários criados no Identity Center](usuarios-identity-center.png)
+*Evidência dos 7 usuários da LogiTrack ativos e gerenciados via diretório SSO corporativo.*
 
-### 1. Painel do AWS IAM Identity Center (Grupos e Usuários)
-![Grupos criados no Identity Center](https://placehold.co)
-*Evidência dos 4 grupos configurados e com as contas atribuídas corretamente.*
+### 2. Configuração de Segurança Global (MFA Ativo)
+![Configuração de MFA Obrigatório](Permissao-identity-center.png)
+*Evidência da política de MFA ativo em todos os logins para conformidade de segurança corporativa.*
 
-### 2. Configuração do AWS Budgets
-![Alarme configurado no AWS Budgets](https://placehold.co)
-*Evidência do orçamento de segurança de $5.00 ativo para evitar surpresas na fatura.*
+### 3. Configuração de FinOps (AWS Budgets)
+![Alarme configurado no AWS Budgets](Budgets.png)
+*Evidência do orçamento de segurança de \$5.00 ativo para evitar surpresas na fatura.*
 
 ---
 🔬 *Fase 1 concluída com sucesso. Próximo passo: Desenho e automação da camada de banco de dados e lógica Serverless (Fase 2).*
