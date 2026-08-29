@@ -86,6 +86,7 @@ Para garantir que a infraestrutura opere estritamente dentro do **AWS Free Tier*
 
 
 ### 6. Restrição Granular de Recursos Administrativos
-![Acesso Negado Menu](detalhe-acesso-negado.png)
-*Até mesmo configurações estéticas da conta (como 'Cor da conta') são bloqueadas para o perfil de FinOps, validando o isolamento rígido imposto pelo IAM Identity Center.*
+![Acesso Negado Menu](detalhe-acesso-negado.png) 
+
+ *Até mesmo configurações estéticas da conta (como 'Cor da conta') são bloqueadas para o perfil de FinOps, validando o isolamento rígido imposto pelo IAM Identity Center.*
 
