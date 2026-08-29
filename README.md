@@ -79,3 +79,8 @@ Para garantir que a infraestrutura opere estritamente dentro do **AWS Free Tier*
 ### 4. Configuração de FinOps (AWS Budgets)
 ![Alarme configurado no AWS Budgets](aws-budgets.png)
 *Evidência do orçamento de segurança de \$5.00 ativo para evitar surpresas na fatura.*
+
+### 5. Validação Prática de Acesso Negado (Rodrigo - FinOps)
+![Acesso Negado em Produção](teste-privilegio-minimo.png)
+*Evidência prática do princípio do privilégio mínimo: o usuário rodrigo.dias (FinOps) tem seu acesso totalmente bloqueado ao tentar visualizar componentes de segurança de infraestrutura (Security Hub).*
+
