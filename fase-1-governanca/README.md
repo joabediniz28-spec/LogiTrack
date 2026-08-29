@@ -60,12 +60,20 @@ Para garantir que a infraestrutura opere estritamente dentro do **AWS Free Tier*
 *Evidência dos 7 usuários da LogiTrack ativos e gerenciados via diretório SSO corporativo.*
 
 ### 2. Configuração de Segurança Global (MFA Ativo)
-![Configuração de MFA Obrigatório](Permissao-identity-center.png)
+![Configuração de MFA Obrigatório](configuracao-mfa.png)
 *Evidência da política de MFA ativo em todos os logins para conformidade de segurança corporativa.*
 
-### 3. Configuração de FinOps (AWS Budgets)
+### 3. Matriz de Perfis de Acesso Corporativo (Permission Sets)
+![Conjuntos de Permissões Provisionados](Permissao-identity-center.png)
+*Evidência dos Permission Sets criados sob o princípio do privilégio mínimo para isolamento dos 4 departamentos da LogiTrack SaaS.*
+
+### 4. Configuração de FinOps (AWS Budgets)
 ![Alarme configurado no AWS Budgets](Budgets.png)
 *Evidência do orçamento de segurança de \$5.00 ativo para evitar surpresas na fatura.*
+
+### 5. Validação Prática de Privilégio Mínimo (Acesso Negado)
+![Acesso Negado no Console](teste-privilegio-minimo.png)
+*Evidência prática de conformidade: o usuário rodrigo.dias (FinOps) é barrado pelo sistema ao tentar acessar recursos de segurança de infraestrutura.*
 
 ---
 🔬 *Fase 1 concluída com sucesso. Próximo passo: Desenho e automação da camada de banco de dados e lógica Serverless (Fase 2).*
