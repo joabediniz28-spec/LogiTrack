@@ -1,8 +1,8 @@
-# 🚚 LogiTrack SaaS — Infraestrutura Cloud Serverless
+# 🚚 LogiTrack SaaS — Infraestrutura como Código & CI/CD Automatizado
 
-A **LogiTrack** é uma startup de tecnologia logística B2B operando no modelo SaaS (Software as a Service). Este repositório contém o desenho, o provisionamento e a automação de toda a infraestrutura global da empresa na **AWS**, simulando um ambiente corporativo real e enxuto. 
+A **LogiTrack** é uma startup de tecnologia logística B2B operando no modelo SaaS (Software as a Service). Este repositório contém o design, o provisionamento e a automação de toda a infraestrutura global da empresa na **AWS**, simulando um ambiente corporativo real, resiliente e enxuto.
 
-O objetivo deste projeto é aplicar os conceitos das certificações AWS na resolução de problemas reais de negócio, utilizando práticas de **Segurança (Zero Trust)**, **Governança** e **Arquitetura Serverless (Custo Zero)**.
+O grande diferencial deste projeto é a eliminação de configurações manuais. Toda a infraestrutura é gerenciada como código via **Terraform** e implantada automaticamente através de uma esteira de **CI/CD com GitHub Actions**.
 
 ---
 
@@ -13,65 +13,54 @@ A LogiTrack oferece uma API de altíssima velocidade para cálculo de frete, rot
 
 ### O Problema que Resolvemos
 1. **Ineficiência no E-commerce:** Pequenos e-commerces não têm tecnologia para integrar de forma rápida com dezenas de transportadoras.
-2. **Abandono de Carrinho:** A lentidão no cálculo do frete durante o checkout faz o cliente desistir. Nossa API responde em menos de 100ms.
+2. **Abandono de Carrinho:** A lentidão no cálculo do frete no checkout faz o cliente desistir. Nossa API Serverless responde em menos de 100ms.
 3. **Falta de Previsibilidade:** Centralizamos o histórico de consultas para prever gargalos de entrega antes que eles aconteçam.
 
 ---
 
-## 🧭 Diretrizes de Engenharia e Cultura
+## 🧭 Diretrizes de Engenharia e Cultura (Foco 80/20)
 
 Como uma startup enxuta limitada a **no máximo 4 funcionários por setor**, a engenharia da LogiTrack segue três princípios rígidos do *AWS Well-Architected Framework*:
 
-*   **Frugalidade (Eficiência de Custo):** Arquitetura 100% Serverless. O custo operacional é estritamente baseado no uso (*Pay-as-you-go*), mantendo a infraestrutura elegível ao **AWS Free Tier (\$0.00 USD/mês)** para validação.
-*   **Segurança Baseada em Identidade (Zero Trust):** Isolamento absoluto de acessos corporativos implementado via AWS IAM Identity Center (SSO) com base no princípio do privilégio mínimo.
-*   **Obsessão por Performance:** Uso de processamento assíncrono e banco de dados NoSQL de chave-valor para garantir latências de um dígito de milissegundo.
+*   **Infraestrutura como Código (IaC):** 100% dos recursos são declarados em arquivos `.tf` utilizando o **Terraform**. Mudanças no ambiente são auditáveis, replicáveis e versionadas.
+*   **GitOps & CI/CD Contínuo:** Ninguém possui permissão para criar recursos manualmente no console de produção. O deploy é controlado pelo **GitHub Actions** através de automações que executam `terraform apply` de forma segura.
+*   **Frugalidade Serverless (Custo Zero):** Arquitetura baseada em AWS Lambda, API Gateway e DynamoDB On-Demand. O custo operacional é estritamente baseado no uso (*Pay-as-you-go*), mantendo a infraestrutura no **AWS Free Tier (\$0.00 USD/mês)**.
 
 ---
 
 ## 🏢 Estrutura Organizacional Corporativa
 
-A governança e o acesso à nuvem são divididos em 4 departamentos simulados (limite de 4 pessoas por setor):
+A governança e o acesso à nuvem são divididos em 4 departamentos simulados (limite de 4 pessoas por setor) gerenciados via AWS IAM Identity Center (SSO):
 
-*   **👥 Diretoria (C-Level):** Acesso de auditoria global (`ReadOnlyAccess`) para acompanhamento de métricas e custos.
-*   **👥 Desenvolvimento (Dev):** Permissões para gerenciar códigos, funções Lambda e visualizar logs de depuração. Sem acesso de exclusão em produção.
-*   **👥 Operações & Infra (DevOps):** Acesso administrativo (`PowerUserAccess`) para provisionar redes, gerenciar tabelas e automações.
-*   **👥 Finanças & RH (Biz):** Acesso restrito e exclusivo ao *AWS Billing and Cost Management* para controle de orçamentos (*FinOps*).
+*   **👥 Diretoria (C-Level):** Acesso de auditoria global (`ReadOnlyAccess`) para acompanhamento estratégico.
+*   **👥 Desenvolvimento (Dev):** Permissão de escrita de código e leitura de logs. Bloqueados para deletar infraestrutura de produção.
+*   **👥 Operações & Infra (DevOps):** Responsáveis pela manutenção dos módulos do Terraform e segredos das esteiras de automação.
+*   **👥 Finanças & RH (Biz):** Acesso estrito e exclusivo ao *AWS Billing* e controle de alertas do AWS Budgets.
 
 ---
 
 ## 🌐 Arquitetura de Referência (AWS Serverless)
 
-Abaixo está o fluxo de dados desenhado para suportar as requisições da nossa API logística:
-
 ```text
-[ Plataforma de E-commerce ] 
-             │
-             ▼
-      [ Amazon Route 53 ] (DNS Global)
-             │
-             ▼
-     [ Amazon CloudFront ] (Distribuição Edge / SSL)
-             │
-             ▼
-    [ Amazon API Gateway ] (Roteamento e Autenticação HTTPS)
-             │
-             ▼
-       [ AWS Lambda ] (Lógica de Cálculo de Roteirização)
-             │
-             ▼
-     [ Amazon DynamoDB ] (Banco NoSQL - Armazenamento de Histórico)
+[ E-commerce Cliente ] ──► [ Amazon API Gateway ] ──► [ AWS Lambda ] ──► [ Amazon DynamoDB ]
+                                                          (Python)            (NoSQL)
 ```
 
 ---
 
-## 🚀 Roadmap de Implementação
+## 🚀 Roadmap de Engenharia (Status do Projeto)
 
-O projeto está dividido em fases incrementais de engenharia:
+O projeto está sendo construído em blocos incrementais de automação:
 
-*   [x] **Fase 1:** Governança e Identidade corporativa com AWS IAM Identity Center e AWS Budgets. -> [Ver documentação e evidências desta fase](./fase-1-governanca/)
-*   [ ] **Fase 2:** Modelagem e provisionamento do Banco de Dados NoSQL com Amazon DynamoDB.
-*   [ ] **Fase 3:** Implantação do Backend da API Serverless (API Gateway + Lambda).
-*   [ ] **Fase 4:** Automação e Esteira de CI/CD integrada ao GitHub Actions.
+*   [x] **Fase 1: Governança, Identidade e FinOps**
+    *   Implementação do IAM Identity Center (SSO) com MFA obrigatório e limites de custo no AWS Budgets.
+    *   👉 [Ver documentação e evidências desta fase](./fase-1-governanca/)
+*   [ ] **Fase 2: Infraestrutura como Código (IaC) com Terraform**
+    *   Escrita dos arquivos `.tf` para provisionamento da tabela `LogiTrack-Quotes` no Amazon DynamoDB e políticas de acesso.
+*   [ ] **Fase 3: Lógica de Negócios da API Serverless**
+    *   Codificação da função Lambda em Python para cálculo de frete e roteamento do Amazon API Gateway via Terraform.
+*   [ ] **Fase 4: GitOps Pipeline (CI/CD)**
+    *   Construção da esteira do GitHub Actions para automação dos comandos `terraform plan` / `terraform apply` e deploy automático do código da Lambda ao disparar um *push* na branch `main`.
 
 ---
-🔬 *Nota: Este projeto foi desenvolvido para fins educacionais de portfólio, aplicando conceitos avançados de Cloud Architecture.*
+🔬 *Nota: Este projeto foi desenvolvido para fins educacionais de portfólio de engenharia, aplicando os padrões mais rígidos de automação e segurança exigidos pelo mercado de trabalho.*
