@@ -27,4 +27,5 @@ O arquivo de estado da infraestrutura (`terraform.tfstate`) foi configurado para
 
 ### 1. Tabela Criada e Ativa no Amazon DynamoDB
 ![Tabela Ativa no DynamoDB](tabela-dynamodb.png)
+
 *Confirmação visual da tabela provisionada com sucesso em Ohio (us-east-2) exibindo as chaves PK e SK declaradas no arquivo `.tf`.*
