@@ -41,3 +41,28 @@ resource "aws_cloudwatch_log_group" "lambda_logs" {
     ManagedBy   = "Terraform"
   }
 }
+
+
+# 4. Provisionamento da Tabela NoSQL integrada para a esteira de CI/CD
+resource "aws_dynamodb_table" "logitrack_quotes" {
+  name         = "LogiTrack-Quotes"
+  billing_mode = "PAY_PER_REQUEST" # Mantém custo zero no Free Tier
+  hash_key     = "PK"              # Partition Key
+  range_key    = "SK"              # Sort Key
+
+  attribute {
+    name = "PK"
+    type = "S"
+  }
+
+  attribute {
+    name = "SK"
+    type = "S"
+  }
+
+  tags = {
+    Environment = "Development"
+    Project     = "LogiTrack-SaaS"
+    ManagedBy   = "Terraform"
+  }
+}
