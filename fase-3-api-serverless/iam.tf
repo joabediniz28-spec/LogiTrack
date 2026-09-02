@@ -1,19 +1,19 @@
-# 1. Criar a Assume Role Policy (Diz à AWS que o serviço Lambda pode assumir esta Role)
-data "aws_iam_policy_document" "lambda_assume_role" {
-  statement {
-    actions = ["sts:AssumeRole"]
-    effect  = "Allow"
-
-    principals {
-      type        = "Service"
-      identifiers = ["://amazonaws.com"]
-    }
-  }
-}
-
+# 1. Criar a Role apontando DIRETAMENTE para o serviço da Lambda
 resource "aws_iam_role" "lambda_execution_role" {
-  name               = "LogiTrack-Lambda-Execution-Role"
-  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
+  name = "LogiTrack-Lambda-Execution-Role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "://amazonaws.com"
+        }
+      }
+    ]
+  })
 
   tags = {
     Environment = "Development"
@@ -24,7 +24,6 @@ resource "aws_iam_role" "lambda_execution_role" {
 
 # 2. Criar a política de permissões granulares (Privilégio Mínimo)
 data "aws_iam_policy_document" "lambda_permissions" {
-  # Permissão para o CloudWatch Logs
   statement {
     actions = [
       "logs:CreateLogGroup",
@@ -35,7 +34,6 @@ data "aws_iam_policy_document" "lambda_permissions" {
     resources = ["arn:aws:logs:*:*:*"]
   }
 
-  # Permissão estrita para o DynamoDB
   statement {
     actions = [
       "dynamodb:PutItem",
