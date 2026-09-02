@@ -5,7 +5,7 @@ data "archive_file" "lambda_zip" {
   output_path = "${path.module}/lambda_function.zip"
 }
 
-
+#Testando...
 # 2. Provisionar a Função AWS Lambda
 resource "aws_lambda_function" "logitrack_shipping_api" {
   filename         = data.archive_file.lambda_zip.output_path
