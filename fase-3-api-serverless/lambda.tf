@@ -1,9 +1,10 @@
-# 1. Compactar automaticamente a pasta src/ contendo o código Python em um arquivo .zip
+# 1. Compactar explicitamente o arquivo Python puro, eliminando metadados de pastas virtuais
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_dir  = "${path.module}/src"
+  source_file = "${path.module}/src/lambda_function.py" # Foca estritamente no arquivo físico de texto
   output_path = "${path.module}/lambda_function.zip"
 }
+
 
 # 2. Provisionar a Função AWS Lambda
 resource "aws_lambda_function" "logitrack_shipping_api" {
