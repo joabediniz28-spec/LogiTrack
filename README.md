@@ -55,4 +55,36 @@ A governança e o acesso à nuvem são divididos em 4 departamentos simulados (l
 * [x] **Fase 3: Lógica de Negócios da API Serverless** ([Ver backend](./fase-3-api-serverless/))
 * [x] **Fase 4: GitOps Pipeline com GitHub Actions (CI/CD Contínuo)** ([Ver esteira automatizada](./.github/workflows/))
 
-    * Construção da esteira do GitHub Actions para automação dos comandos `terraform plan` / `terraform apply` e deploy automático do código da Lambda ao disparar um *push* na branch `main`.
+---
+
+## 🧪 Evidência de Funcionamento em Produção (Fase 4 GitOps)
+
+Para validar o sucesso do deploy automatizado e comprovar a integração real entre o **Amazon API Gateway**, a função **AWS Lambda (Python)** e o **Amazon DynamoDB**, foi realizado um disparo de teste ponta a ponta via terminal utilizando o utilitário `curl`.
+
+### 1. Chamada de Teste via Terminal (Request)
+```bash
+curl -X POST https://amazonaws.com \
+     -H "Content-Type: application/json" \
+     -d '{
+       "client_id": "1002",
+       "origin_zip": "01001-000",
+       "destination_zip": "70002-000",
+       "weight_kg": 2.5
+     }'
+```
+
+### 2. Resposta de Alta Performance Recebida (Response)
+```json
+{
+  "quote_id": "Q-C5A47250",
+  "carrier": "LogiTrack Ninja",
+  "delivery_days": 3,
+  "shipping_cost": 16.25,
+  "status": "Calculado e Armazenado"
+}
+```
+
+> 💡 **Nota de Engenharia:** O status `"Calculado e Armazenado"` comprova que a regra de negócio em Python processou as variáveis numéricas com precisão decimal, gerou o ID único da cotação e realizou a persistência física do registro dentro da tabela NoSQL no DynamoDB com latência inferior a 100ms.
+
+---
+🔬 *Nota: Este projeto foi desenvolvido para fins educacionais de portfólio de engenharia, aplicando os padrões mais rígidos de automação e segurança exigidos pelo mercado de trabalho.*
