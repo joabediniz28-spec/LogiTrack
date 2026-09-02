@@ -53,6 +53,6 @@ A governança e o acesso à nuvem são divididos em 4 departamentos simulados (l
 * [x] **Fase 1: Governança, Identidade e FinOps** ([Ver documentação](./fase-1-governanca/))
 * [x] **Fase 2: Infraestrutura como Código (IaC) com Terraform** ([Ver código](./fase-2-iac-terraform/))
 * [x] **Fase 3: Lógica de Negócios da API Serverless** ([Ver backend](./fase-3-api-serverless/))
-* [ ] **Fase 4: GitOps Pipeline (CI/CD)**
+* [x] **Fase 4: GitOps Pipeline com GitHub Actions (CI/CD Contínuo)** ([Ver esteira automatizada](./.github/workflows/))
 
     * Construção da esteira do GitHub Actions para automação dos comandos `terraform plan` / `terraform apply` e deploy automático do código da Lambda ao disparar um *push* na branch `main`.
