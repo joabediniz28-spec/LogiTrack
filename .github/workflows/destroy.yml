@@ -1,0 +1,46 @@
+name: "🗑️ FinOps - Destruição Controlada de Recursos"
+
+# 🛡️ Padrão Enterprise: Bloqueia disparos automáticos por push.
+# A esteira SÓ roda se o engenheiro for até o painel do GitHub e clicar no botão manualmente.
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform-destroy:
+    name: "Limpeza Total de Infraestrutura"
+    runs-on: ubuntu-latest
+
+    # Permissões mínimas necessárias para a esteira rodar
+    permissions:
+      contents: read
+
+    # Injeção das chaves do cofre do GitHub e escopo regional
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: "us-east-2"
+      AWS_DEFAULT_REGION: "us-east-2"
+
+    defaults:
+      run:
+        working-directory: ./fase-3-api-serverless
+
+    steps:
+      - name: "Checkout do Código"
+        uses: actions/checkout@v4
+
+      - name: "Instalar o Terraform"
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.7.0"
+
+      - name: "Terraform Init"
+        run: terraform init -reconfigure
+
+      # 📊 Gera o plano de destruição para auditoria nos logs da esteira
+      - name: "Terraform Plan Destroy"
+        run: terraform plan -destroy -out=tfdestroyplan
+
+      # 🚀 Executa a limpeza física total na AWS aplicando deterministicamente o plano gerado
+      - name: "Terraform Destroy (Limpeza Automatizada)"
+        run: terraform apply tfdestroyplan
