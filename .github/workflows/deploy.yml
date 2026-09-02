@@ -1,57 +1,49 @@
 name: "🚀 GitOps Continuous Deployment (CD)"
 
-# A esteira dispara automaticamente sob duas condições estritas:
 on:
   push:
     branches:
       - main
     paths:
-      - "fase-3-api-serverless/**" # Só roda se houver alterações nesta pasta específica
+      - "fase-3-api-serverless/**"
 
 jobs:
   terraform-deploy:
     name: "Deploy Infra & Lambda API"
-    runs-on: ubuntu-latest # Abre uma máquina virtual Linux Ubuntu na nuvem do GitHub
+    runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: ./fase-3-api-serverless # Executa todos os comandos dentro da pasta certa
+        working-directory: ./fase-3-api-serverless
+
+    # Centraliza as credenciais para todos os steps do job
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: "us-east-2"
 
     steps:
-      # 1. Baixa o código do repositório para dentro da máquina virtual
       - name: "Checkout do Código"
         uses: actions/checkout@v4
 
-      # 2. Instala o interpretador do Python (necessário para a AWS Lambda)
       - name: "Configurar o Python"
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      # 3. Instala e configura a CLI do Terraform na máquina virtual
       - name: "Instalar o Terraform"
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.7.0"
 
-      # 4. Inicializa o Terraform conectando ao backend S3 remoto em Ohio
-      # Nota: Injeta as chaves secretas que salvamos no cofre do GitHub via variáveis de ambiente
+      - name: "Terraform Format Check"
+        run: terraform fmt -check
+
       - name: "Terraform Init"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform init -reconfigure
 
-      # 5. Executa a simulação de segurança (Plan) para auditar as mudanças
       - name: "Terraform Plan"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: terraform plan
+        run: terraform plan -out=tfplan
 
-      # 6. Realiza o deploy definitivo de forma 100% automatizada na AWS AWS
-      - name: "Terraform Apply (Deploy Automático)"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: terraform apply -auto-approve
+      - name: "Terraform Apply"
+        run: terraform apply -auto-approve tfplan
