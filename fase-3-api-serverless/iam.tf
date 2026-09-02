@@ -1,4 +1,4 @@
-# 1. Criar a Role apontando DIRETAMENTE para o serviço da Lambda
+# 1. Criar a Role injetando o JSON de Confiança diretamente via jsonencode (Sem Bloco Data)
 resource "aws_iam_role" "lambda_execution_role" {
   name = "LogiTrack-Lambda-Execution-Role"
 
@@ -9,7 +9,7 @@ resource "aws_iam_role" "lambda_execution_role" {
         Action = "sts:AssumeRole"
         Effect = "Allow"
         Principal = {
-          Service = "://amazonaws.com"
+          Service = "lambda.amazonaws.com" # Identificador exato e blindado contra truncamento
         }
       }
     ]
