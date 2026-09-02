@@ -1,0 +1,1 @@
+# Permissões IAM da Lambda
