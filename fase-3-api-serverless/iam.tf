@@ -42,7 +42,7 @@ data "aws_iam_policy_document" "lambda_permissions" {
       "dynamodb:GetItem"
     ]
     effect    = "Allow"
-    resources = ["arn:aws:dynamodb:us-east-2:939603205666:table/LogiTrack-Quotes"] # Injeta o ARN exato da tabela
+    resources = ["arn:aws:dynamodb:us-east-2:939603205666:table/LogiTrack-Quotes"]
   }
 }
 
@@ -57,4 +57,3 @@ resource "aws_iam_role_policy_attachment" "lambda_attach" {
   role       = aws_iam_role.lambda_execution_role.name
   policy_arn = aws_iam_policy.lambda_policy.arn
 }
-
