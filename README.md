@@ -50,19 +50,9 @@ A governança e o acesso à nuvem são divididos em 4 departamentos simulados (l
 
 ## 🚀 Roadmap de Engenharia (Status do Projeto)
 
-O projeto está sendo construído em blocos incrementais de automação:
-
-* [x] **Fase 1: Governança, Identidade e FinOps**
-    * Implementação do IAM Identity Center (SSO) com MFA obrigatório e limites de custo no AWS Budgets.
-    * 👉 [Ver documentação e evidências desta fase](./fase-1-governanca/)
-    
-* [x] **Fase 2: Infraestrutura como Código (IaC) com Terraform**
-    * Escrita dos arquivos `.tf` para provisionamento da tabela `LogiTrack-Quotes` no Amazon DynamoDB e políticas de acesso.
-    * 👉 [Ver código Terraform e evidências do banco de dados](./fase-2-iac-terraform/)
-    
-* [ ] **Fase 3: Lógica de Negócios da API Serverless**
-    * Codificação da função Lambda em Python para cálculo de frete e roteamento do Amazon API Gateway via Terraform.
-    * ⏳ *Próxima etapa do laboratório.*
-    
+* [x] **Fase 1: Governança, Identidade e FinOps** ([Ver documentação](./fase-1-governanca/))
+* [x] **Fase 2: Infraestrutura como Código (IaC) com Terraform** ([Ver código](./fase-2-iac-terraform/))
+* [x] **Fase 3: Lógica de Negócios da API Serverless** ([Ver backend](./fase-3-api-serverless/))
 * [ ] **Fase 4: GitOps Pipeline (CI/CD)**
+
     * Construção da esteira do GitHub Actions para automação dos comandos `terraform plan` / `terraform apply` e deploy automático do código da Lambda ao disparar um *push* na branch `main`.
