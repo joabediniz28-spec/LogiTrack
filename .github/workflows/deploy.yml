@@ -12,12 +12,10 @@ jobs:
     name: "Deploy Infra & Lambda API"
     runs-on: ubuntu-latest
 
-    # Permissões declaradas no nível correto do JOB
     permissions:
       id-token: write
       contents: read
 
-    # Credenciais e região injetadas para todo o job
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
