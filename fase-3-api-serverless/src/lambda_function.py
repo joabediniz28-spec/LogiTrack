@@ -33,7 +33,7 @@ def lambda_handler(event, context):
         # R$ 10.00 base + R$ 2.50 por quilo
         shipping_cost = Decimal('10.00') + (weight_kg * Decimal('2.50'))
         delivery_days = 3 if weight_kg < Decimal('5') else 5
-        carrier_selected = "LogiTrack Express" if weight_kg < Decimal('5') else "LogiTrack Heavy"
+        carrier_selected = "LogiTrack Ninja" if weight_kg < Decimal('5') else "LogiTrack Heavy"
         
         # 3. Modelagem de Dados Single-Table Design para o DynamoDB
         quote_id = f"Q-{uuid.uuid4().hex[:8].upper()}"
