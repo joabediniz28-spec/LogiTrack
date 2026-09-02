@@ -12,11 +12,16 @@ jobs:
     name: "Deploy Infra & Lambda API"
     runs-on: ubuntu-latest
 
-    # 🛠️ MELHORIA 1: Credenciais injetadas globalmente a nível de JOB. 
-    # Remove a poluição visual de repetir as chaves em cada step da esteira.
+    # Permissões declaradas no nível correto do JOB
+    permissions:
+      id-token: write
+      contents: read
+
+    # Credenciais e região injetadas para todo o job
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: "us-east-2"
 
     defaults:
       run:
@@ -25,11 +30,6 @@ jobs:
     steps:
       - name: "Checkout do Código"
         uses: actions/checkout@v4
-
-      # Adiciona permissões necessárias para o padrão OIDC no futuro
-      permissions:
-        id-token: write
-        contents: read
 
       - name: "Configurar o Python"
         uses: actions/setup-python@v5
@@ -44,12 +44,8 @@ jobs:
       - name: "Terraform Init"
         run: terraform init -reconfigure
 
-      # 🛠️ MELHORIA 2 (Parte A): Gera o plano de mudanças e salva em um arquivo binário imutável (tfplan).
-      # Garante que o que foi revisado aqui será exatamente o que será aplicado no passo seguinte.
       - name: "Terraform Plan"
         run: terraform plan -out=tfplan
 
-      # 🛠️ MELHORIA 2 (Parte B): Executa o apply referenciando o arquivo binário gerado no step anterior.
-      # Elimina o uso de "-auto-approve" solto, seguindo a boa prática rígida de segurança corporativa.
       - name: "Terraform Apply (Deploy Seguro)"
         run: terraform apply tfplan
