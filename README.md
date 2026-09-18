@@ -24,7 +24,7 @@ Como uma startup enxuta limitada a **no máximo 4 funcionários por setor**, a e
 
 *   **Infraestrutura como Código (IaC):** 100% dos recursos são declarados em arquivos `.tf` utilizando o **Terraform**. Mudanças no ambiente são auditáveis, replicáveis e versionadas.
 *   **GitOps & CI/CD Contínuo:** Ninguém possui permissão para criar recursos manualmente no console de produção. O deploy é controlado pelo **GitHub Actions** através de automações que executam `terraform apply` de forma segura.
-*   **Frugalidade Serverless (Custo Zero):** Arquitetura baseada em AWS Lambda, API Gateway e DynamoDB On-Demand. O custo operacional é estritamente baseado no uso (*Pay-as-you-go*), mantendo a infraestrutura no **AWS Free Tier (\$0.00 USD/mês)**.
+*   **Frugalidade Serverless (Custo Zero):** Arquitetura baseada em AWS Lambda, API Gateway e DynamoDB On-Demand. O custo operacional é estritamente baseado no uso (*Pay-as-you-go*), mantendo a arquitetura projetada para minimizar custos utilizando serviços serverless e modelos de cobrança por uso..
 
 ---
 
